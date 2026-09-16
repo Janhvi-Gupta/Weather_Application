@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-
 import '../utils/weather_code_map.dart';
 
 class ForecastListWidget extends StatelessWidget {
-  final Map<String, dynamic> daily;
+  final Map<String, dynamic> daily;  //stores the daily forecast data as key-value pairs, dynamic allows different types of values
 
   const ForecastListWidget({super.key, required this.daily});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;  //gets the current screen width so the ui can adapt to different screen sizes
     final cardWidth = screenWidth < 400 ? 110.0 : 130.0;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(  //vertical structure
+      crossAxisAlignment: CrossAxisAlignment.start,  //aligns the children to the start of the ccolumn
       children: [
         const SizedBox(height: 20),
         const Text(
@@ -51,7 +50,7 @@ class ForecastListWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      weatherCodeMap[daily['weather_code'][index]] ?? '',
+                      weatherCodeMap[daily['weather_code'][index]] ?? '', //converts the weather code into a weather description using weatherCodeMap
                       style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                     const SizedBox(height: 4),

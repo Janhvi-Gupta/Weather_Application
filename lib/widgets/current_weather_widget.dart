@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/weather_code_map.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {
-  final Map<String, dynamic> weatherData;
+  final Map<String, dynamic> weatherData;  //stores the current weather data as key-value pairs
   final String cityName;
   final String country;
 
@@ -15,7 +15,7 @@ class CurrentWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final current = weatherData['current'];
+    final current = weatherData['current'];  //extracts the current weather data from the weatherData map and stores it in current
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),

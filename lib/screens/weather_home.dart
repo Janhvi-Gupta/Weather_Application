@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;  //imports the http package to send requests to web apis and recive data
 import '../widgets/search_bar_widget.dart';
 import '../widgets/current_weather_widget.dart';
 import '../widgets/forecast_list_widget.dart';
 
-class WeatherHome extends StatefulWidget {
+class WeatherHome extends StatefulWidget { //statefulwidget: its ui can change when data changes
   const WeatherHome({super.key});
 
   @override
@@ -16,7 +16,7 @@ class _WeatherHomeState extends State<WeatherHome> {
   final TextEditingController _controller = TextEditingController();
   bool loading = false;
   String error = '';
-  Map<String, dynamic>? weatherData;
+  Map<String, dynamic>? weatherData;  //stores weather data as a key-value map, ?: means it can initially be null
   String cityName = '';
   String country = '';
 
@@ -26,15 +26,15 @@ class _WeatherHomeState extends State<WeatherHome> {
       error = '';
     });
 
-    try {
+    try {  //executes the codes which may produce error in the application
       final geoUrl = Uri.parse('https://geocoding-api.open-meteo.com/v1/search?name=$city');
       final geoResponse = await http.get(geoUrl);
       final geoData = jsonDecode(geoResponse.body);
 
-      if (geoData['results'] == null || geoData['results'].isEmpty) {
+      if (geoData['results'] == null || geoData['results'].isEmpty) {  //checks whether the api can find any no matching city
         setState(() {
           error = 'City not found. Please try another name.';
-          weatherData = null;
+          weatherData = null;  //clears earlier displayed weather data
           loading = false;
         });
         return;
@@ -48,8 +48,8 @@ class _WeatherHomeState extends State<WeatherHome> {
 
       final weatherUrl = Uri.parse(
           'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=7&timezone=auto');
-      final weatherResponse = await http.get(weatherUrl);
-      final weatherResult = jsonDecode(weatherResponse.body);
+      final weatherResponse = await http.get(weatherUrl);  //sends the weather api request and waits for its response
+      final weatherResult = jsonDecode(weatherResponse.body);  //converts the weather apis json response into dart data that the app can use
 
       setState(() {
         weatherData = weatherResult;
@@ -57,7 +57,8 @@ class _WeatherHomeState extends State<WeatherHome> {
         country = countryName;
         loading = false;
       });
-    } catch (e) {
+    } 
+    catch (e) {
       setState(() {
         error = 'Something went wrong. Please check your connection.';
         weatherData = null;
